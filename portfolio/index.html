@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CLASON PETER</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --black:#050505;
+  --white:#EFEFEF;
+  --chrome-1:#E8E8E8;
+  --chrome-2:#B8B8B8;
+  --chrome-3:#888888;
+  --chrome-4:#555555;
+  --chrome-5:#2C2C2C;
+  --chrome-6:#1A1A1A;
+  --card:#0D0D0D;
+  --border:#222222;
+  --border-light:#333333;
+}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:'Space Mono',monospace;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:'';
+  position:fixed;inset:0;z-index:8000;
+  pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  opacity:0.3;
+}
+
+/* ── CURSOR ── */
+#cursor, #cursor-ring{ display:none; }
+
+/* ── SCROLL LINE ── */
+.scroll-line{
+  position:fixed;top:0;left:0;height:1px;
+  background:var(--chrome-2);
+  z-index:1000;width:0%;transition:width 0.08s linear;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.5rem 3rem;
+  border-bottom:1px solid var(--border);
+  background:rgba(5,5,5,0.92);
+  backdrop-filter:blur(24px);
+}
+.nav-logo{
+  display:flex;align-items:center;
+  text-decoration:none;
+  opacity:0.9;transition:opacity 0.2s;
+}
+.nav-logo:hover{opacity:1;}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{
+  font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--chrome-3);text-decoration:none;
+  transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--white);}
+
+/* ── HERO ── */
+#hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:8rem 3rem 4rem;
+  position:relative;overflow:hidden;
+  max-width:100%;
+}
+.hero-bg-text{
+  position:absolute;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(10rem,20vw,26rem);
+  letter-spacing:0.04em;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(255,255,255,0.04);
+  white-space:nowrap;
+  top:50%;transform:translateY(-50%);
+  left:-1%;
+  pointer-events:none;user-select:none;
+  will-change:transform;
+}
+.chrome-bar{
+  position:absolute;right:0;top:0;bottom:0;width:1px;
+  background:linear-gradient(to bottom,transparent,var(--chrome-4),var(--chrome-2),var(--chrome-4),transparent);
+  opacity:0.35;
+}
+.hero-eyebrow{
+  font-size:0.58rem;letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--chrome-3);margin-bottom:1.75rem;
+  opacity:0;animation:fadeUp 0.7s ease 0.2s forwards;
+}
+.hero-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(4.5rem,11vw,10rem);
+  letter-spacing:0.05em;line-height:0.9;
+  color:var(--white);
+  opacity:0;animation:fadeUp 0.7s ease 0.35s forwards;
+}
+.hero-subtitle{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(0.9rem,2vw,1.3rem);
+  color:var(--chrome-3);
+  margin-top:1.5rem;
+  opacity:0;animation:fadeUp 0.7s ease 0.5s forwards;
+}
+.hero-desc{
+  max-width:460px;
+  font-size:0.7rem;line-height:2.1;
+  color:var(--chrome-4);
+  margin-top:1.5rem;letter-spacing:0.05em;
+  opacity:0;animation:fadeUp 0.7s ease 0.65s forwards;
+}
+.hero-cta{
+  margin-top:2.75rem;display:flex;gap:1rem;flex-wrap:wrap;
+  opacity:0;animation:fadeUp 0.7s ease 0.8s forwards;
+}
+.btn{
+  display:inline-block;padding:0.85rem 2.25rem;
+  font-family:'Space Mono',monospace;
+  font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;
+  text-decoration:none;
+  transition:all 0.25s;
+}
+.btn-primary{background:var(--white);color:var(--black);border:1px solid var(--white);}
+.btn-primary:hover{background:transparent;color:var(--white);}
+.btn-ghost{background:transparent;color:var(--chrome-3);border:1px solid var(--border-light);}
+.btn-ghost:hover{border-color:var(--chrome-3);color:var(--white);}
+
+/* ── MARQUEE ── */
+.marquee-wrap{
+  overflow:hidden;
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:0.9rem 0;
+}
+.marquee-track{display:flex;width:max-content;animation:marquee 22s linear infinite;}
+.marquee-item{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:0.85rem;letter-spacing:0.28em;
+  color:var(--chrome-5);padding:0 2.5rem;white-space:nowrap;
+}
+.marquee-dot{color:var(--chrome-4);}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ── SECTION INNER ── */
+.section-inner{max-width:1200px;margin:0 auto;padding:6rem 3rem;}
+.section-tag{
+  font-size:0.56rem;letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--chrome-3);margin-bottom:0.75rem;
+  display:flex;align-items:center;gap:1.25rem;
+}
+.section-tag::after{content:'';flex:1;height:1px;background:var(--border);}
+.section-heading{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.5rem,5vw,4.5rem);
+  letter-spacing:0.06em;line-height:1;
+  margin-bottom:3.5rem;color:var(--white);
+}
+
+/* ── SKILLS GRID ── */
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:1px;border:1px solid var(--border);
+}
+.card-3d-wrap{perspective:900px;background:var(--card);}
+.card-3d{
+  padding:2.25rem 2.25rem 7rem 2.25rem;height:100%;
+  transform-style:preserve-3d;
+  transition:transform 0.35s ease;
+  position:relative;overflow:hidden;
+  border-right:1px solid var(--border);
+}
+.card-3d::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.025) 0%,transparent 55%);
+  pointer-events:none;opacity:0;transition:opacity 0.3s;
+}
+.card-3d:hover::after{opacity:1;}
+.card-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:4rem;color:var(--border);
+  position:absolute;bottom:0.75rem;right:1.25rem;
+  line-height:1;pointer-events:none;transition:color 0.3s;
+  opacity:0.6;
+}
+.card-3d:hover .card-num{color:var(--chrome-5);}
+.card-3d h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.05rem;font-weight:700;
+  margin-bottom:0.6rem;color:var(--white);letter-spacing:0.01em;
+}
+.card-3d p{font-size:0.68rem;line-height:1.95;color:var(--chrome-4);letter-spacing:0.04em;}
+.card-tags{display:flex;flex-wrap:wrap;gap:0.35rem;margin-top:1.25rem;}
+.card-tag{
+  font-size:0.53rem;letter-spacing:0.12em;text-transform:uppercase;
+  padding:0.28rem 0.7rem;
+  border:1px solid var(--border-light);color:var(--chrome-4);
+  transition:border-color 0.2s,color 0.2s;
+}
+.card-3d:hover .card-tag{border-color:var(--chrome-5);color:var(--chrome-3);}
+.card-tag.hi{border-color:var(--chrome-4);color:var(--chrome-2);}
+
+/* ── PROJECTS ── */
+.project-item{
+  border-top:1px solid var(--border);
+  padding:2.25rem 0;
+  display:grid;grid-template-columns:3rem 1fr auto;
+  gap:2.5rem;align-items:center;
+  transition:padding-left 0.3s;cursor:pointer;
+}
+.project-item:hover{padding-left:0.75rem;}
+.project-item:last-child{border-bottom:1px solid var(--border);}
+.proj-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:0.9rem;color:var(--chrome-5);
+  letter-spacing:0.12em;transition:color 0.2s;
+}
+.project-item:hover .proj-num{color:var(--chrome-2);}
+.proj-info h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-weight:700;
+  margin-bottom:0.4rem;letter-spacing:0.01em;
+  transition:color 0.2s;
+}
+.proj-info p{font-size:0.68rem;color:var(--chrome-4);line-height:1.85;letter-spacing:0.04em;}
+.proj-tags{display:flex;gap:0.4rem;margin-top:0.75rem;flex-wrap:wrap;}
+.proj-tag{
+  font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;
+  padding:0.22rem 0.6rem;border:1px solid var(--border);color:var(--chrome-5);
+}
+.proj-arrow{
+  font-family:'Space Mono',monospace;
+  font-size:0.9rem;color:var(--border);
+  transition:color 0.2s,transform 0.2s;
+}
+.project-item:hover .proj-arrow{color:var(--chrome-2);transform:translateX(4px);}
+
+/* ── SPLASH SCREEN ── */
+#splash{
+  position:fixed;inset:0;z-index:99999;
+  background:var(--black);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  pointer-events:all;
+  transition:opacity 0.8s ease 0.2s, visibility 0.8s ease 0.2s;
+}
+#splash.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+
+.splash-top, .splash-bottom{
+  position:absolute;left:0;right:0;height:50%;
+  background:var(--black);
+  transition:transform 0.9s cubic-bezier(0.76,0,0.24,1);
+  z-index:2;
+}
+.splash-top{top:0;transform-origin:top;}
+.splash-bottom{bottom:0;transform-origin:bottom;}
+#splash.hidden .splash-top{transform:translateY(-100%);}
+#splash.hidden .splash-bottom{transform:translateY(100%);}
+
+.splash-content{
+  position:relative;z-index:3;
+  text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:1.5rem;
+}
+.splash-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3.5rem,10vw,9rem);
+  letter-spacing:0.12em;
+  color:var(--white);
+  overflow:hidden;
+  display:flex;gap:0.06em;
+}
+.splash-name span{
+  display:inline-block;
+  opacity:0;
+  transform:translateY(60px);
+  animation:splashLetter 0.6s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+.splash-sub{
+  font-size:0.58rem;letter-spacing:0.38em;text-transform:uppercase;
+  color:var(--chrome-5);
+  opacity:0;
+  animation:splashFade 0.5s ease 1.2s forwards;
+}
+.splash-line{
+  width:0;height:1px;
+  background:linear-gradient(to right, transparent, var(--chrome-4), transparent);
+  animation:splashLine 0.7s ease 1s forwards;
+}
+.splash-enter{
+  margin-top:1rem;
+  font-size:0.52rem;letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--chrome-5);
+  opacity:0;
+  animation:splashFade 0.5s ease 1.6s forwards;
+  cursor:pointer;
+  border:1px solid var(--border);
+  padding:0.7rem 2rem;
+  background:transparent;
+  color:var(--chrome-4);
+  font-family:'Space Mono',monospace;
+  transition:border-color 0.2s, color 0.2s;
+}
+.splash-enter:hover{border-color:var(--chrome-3);color:var(--white);}
+
+@keyframes splashLetter{
+  to{opacity:1;transform:translateY(0);}
+}
+@keyframes splashFade{
+  to{opacity:1;}
+}
+@keyframes splashLine{
+  to{width:240px;}
+}
+
+/* ── ABOUT SINGLE COL ── */
+.vibe-grid-single{max-width:680px;}
+.vibe-grid-single .vibe-left p{
+  font-size:0.72rem;line-height:2.15;color:var(--chrome-4);
+  letter-spacing:0.04em;margin-bottom:1rem;
+}
+.vibe-grid-single .vibe-left strong{color:var(--chrome-2);}
+
+
+.interests-wall{
+  display:grid;grid-template-columns:1fr 1fr;
+  border:1px solid var(--border);
+}
+.interest-tile{
+  padding:2rem 1.75rem;
+  border-right:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:var(--card);transition:background 0.25s;
+}
+.interest-tile:hover{background:#111;}
+.interest-tile:nth-child(even){border-right:none;}
+.interest-tile:nth-last-child(-n+2){border-bottom:none;}
+.ti-label{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.1rem;letter-spacing:0.15em;
+  color:var(--white);display:block;margin-bottom:0.3rem;
+}
+.ti-sub{font-size:0.6rem;color:var(--chrome-4);letter-spacing:0.06em;line-height:1.6;}
+
+/* ── CURRENTLY ── */
+.currently-row{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  border:1px solid var(--border);margin-top:3.5rem;
+}
+.curr-block{
+  padding:2rem;background:var(--card);
+  border-right:1px solid var(--border);
+}
+.curr-block:last-child{border-right:none;}
+.curr-label{
+  font-size:0.53rem;letter-spacing:0.24em;text-transform:uppercase;
+  color:var(--chrome-3);margin-bottom:0.75rem;
+}
+.curr-block h3{
+  font-family:'Playfair Display',serif;
+  font-size:1rem;margin-bottom:0.4rem;color:var(--white);
+}
+.curr-block p{font-size:0.66rem;color:var(--chrome-4);line-height:1.75;letter-spacing:0.03em;}
+
+/* ── CONTACT ── */
+#contact-section{
+  text-align:center;
+  border-top:1px solid var(--border);
+  padding:6rem 3rem 8rem;
+}
+.contact-headline{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3.5rem,9vw,8rem);
+  letter-spacing:0.05em;line-height:1;
+  margin-bottom:1.5rem;
+}
+.contact-outline{
+  -webkit-text-stroke:1px var(--chrome-5);
+  color:transparent;
+}
+#contact-section > p{
+  font-size:0.7rem;color:var(--chrome-4);
+  max-width:400px;margin:0 auto 2.5rem;line-height:1.95;letter-spacing:0.05em;
+}
+.contact-links{
+  display:flex;justify-content:center;flex-wrap:wrap;
+  border:1px solid var(--border);max-width:600px;margin:0 auto;
+}
+.contact-link{
+  font-size:0.56rem;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--chrome-4);text-decoration:none;
+  padding:1.1rem 2rem;background:var(--card);
+  border-right:1px solid var(--border);
+  transition:background 0.2s,color 0.2s;flex:1;text-align:center;
+}
+.contact-link:last-child{border-right:none;}
+.contact-link:hover{background:#111;color:var(--white);}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid var(--border);
+  padding:1.75rem 3rem;
+  display:flex;justify-content:space-between;align-items:center;
+  max-width:1200px;margin:0 auto;
+}
+footer p{font-size:0.55rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--chrome-5);}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity 0.65s ease,transform 0.65s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  nav{padding:1.2rem 1.5rem;}
+  .nav-links{gap:1.5rem;}
+  #hero{padding:7rem 1.5rem 4rem;}
+  .section-inner{padding:4rem 1.5rem;}
+  .vibe-grid{grid-template-columns:1fr;gap:2.5rem;}
+  .currently-row{grid-template-columns:1fr;}
+  .curr-block{border-right:none;border-bottom:1px solid var(--border);}
+  .curr-block:last-child{border-bottom:none;}
+  .project-item{grid-template-columns:2.5rem 1fr;gap:1rem;}
+  .proj-arrow{display:none;}
+  .card-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:0.75rem;text-align:center;}
+  .contact-links{flex-direction:column;}
+  .contact-link{border-right:none;border-bottom:1px solid var(--border);}
+  .contact-link:last-child{border-bottom:none;}
+}
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <div class="splash-top"></div>
+  <div class="splash-bottom"></div>
+  <div class="splash-content">
+    <div class="splash-name" id="splashName"></div>
+    <div class="splash-line"></div>
+    <p class="splash-sub">Data · Analytics · Engineering</p>
+    <button class="splash-enter" id="splashEnter" onclick="dismissSplash()">Enter Portfolio</button>
+  </div>
+</div>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<div class="scroll-line" id="scrollLine"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <svg viewBox="0 0 152 192" height="34" fill="none" stroke="#EFEFEF" stroke-width="8" stroke-linecap="square" stroke-linejoin="miter" xmlns="http://www.w3.org/2000/svg">
+      <!-- C as tall bracket -->
+      <path d="M62,10 L10,10 L10,182 L62,182"/>
+      <!-- P: stem + shoulder bowl -->
+      <path d="M84,10 L84,182 M84,10 L142,10 L142,82 L84,82"/>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#personal">About</a></li>
+    <li><a href="#contact-section">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-bg-text">CLASON</div>
+  <div class="chrome-bar"></div>
+  <p class="hero-eyebrow">Data Analytics · Science · Engineering</p>
+  <h1 class="hero-name">CLASON<br/>PETER</h1>
+  <p class="hero-subtitle">Turning data into decisions.</p>
+  <p class="hero-desc">
+    Analyst with an eye for patterns and a mind for systems. Expanding into data science and engineering, building pipelines, models, and infrastructure that scale.
+  </p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn btn-primary">View Work</a>
+    <a href="#contact-section" class="btn btn-ghost">Get in Touch</a>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">CLASON PETER</span>
+    <span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">DATA ANALYTICS</span>
+    <span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">DATA SCIENCE</span>
+    <span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">ENGINEERING</span>
+    <span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">WEST VIRGINIA</span>
+    <span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">AVAILABLE FOR HIRE</span>
+    <span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">CLASON PETER</span>
+    <span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">DATA ANALYTICS</span>
+    <span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">DATA SCIENCE</span>
+    <span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">ENGINEERING</span>
+    <span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">WEST VIRGINIA</span>
+    <span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">AVAILABLE FOR HIRE</span>
+    <span class="marquee-item marquee-dot">·</span>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<div id="skills">
+  <div class="section-inner">
+    <p class="section-tag reveal">01 · Skills</p>
+    <h2 class="section-heading reveal">SKILLS &<br/>TOOLS</h2>
+    <div class="card-grid">
+
+      <div class="card-3d-wrap reveal">
+        <div class="card-3d" data-tilt>
+          <h3>Analytics & Visualization</h3>
+          <p>Dashboards that move decisions. Building visual systems that make data legible to any audience.</p>
+          <div class="card-tags">
+            <span class="card-tag hi">Tableau</span>
+            <span class="card-tag hi">Power BI</span>
+            <span class="card-tag">Looker</span>
+            <span class="card-tag">Excel</span>
+          </div>
+          <div class="card-num">01</div>
+        </div>
+      </div>
+
+      <div class="card-3d-wrap reveal">
+        <div class="card-3d" data-tilt>
+          <h3>Programming</h3>
+          <p>Clean code for complex data. Python for analysis and automation, SQL for everything beneath it.</p>
+          <div class="card-tags">
+            <span class="card-tag hi">Python</span>
+            <span class="card-tag hi">SQL</span>
+            <span class="card-tag">Pandas</span>
+            <span class="card-tag">NumPy</span>
+            <span class="card-tag">R</span>
+          </div>
+          <div class="card-num">02</div>
+        </div>
+      </div>
+
+      <div class="card-3d-wrap reveal">
+        <div class="card-3d" data-tilt>
+          <h3>Data Engineering</h3>
+          <p>Building the infrastructure beneath insights. Pipelines, warehouses, and orchestration at scale.</p>
+          <div class="card-tags">
+            <span class="card-tag hi">dbt</span>
+            <span class="card-tag hi">BigQuery</span>
+            <span class="card-tag">Airflow</span>
+            <span class="card-tag">Spark</span>
+            <span class="card-tag">AWS</span>
+          </div>
+          <div class="card-num">03</div>
+        </div>
+      </div>
+
+      <div class="card-3d-wrap reveal">
+        <div class="card-3d" data-tilt>
+          <h3>Machine Learning</h3>
+          <p>Predictive models with accountability. Feature engineering, model selection, and explainability.</p>
+          <div class="card-tags">
+            <span class="card-tag hi">Scikit-learn</span>
+            <span class="card-tag">XGBoost</span>
+            <span class="card-tag">SHAP</span>
+            <span class="card-tag">Regression</span>
+          </div>
+          <div class="card-num">04</div>
+        </div>
+      </div>
+
+      <div class="card-3d-wrap reveal">
+        <div class="card-3d" data-tilt>
+          <h3>Databases</h3>
+          <p>Schema design, complex queries, and performance optimization across relational and cloud systems.</p>
+          <div class="card-tags">
+            <span class="card-tag hi">PostgreSQL</span>
+            <span class="card-tag hi">Snowflake</span>
+            <span class="card-tag">MySQL</span>
+            <span class="card-tag">MongoDB</span>
+          </div>
+          <div class="card-num">05</div>
+        </div>
+      </div>
+
+      <div class="card-3d-wrap reveal">
+        <div class="card-3d" data-tilt>
+          <h3>Strategy & Communication</h3>
+          <p>Translating technical findings into decisions. Data storytelling that lands with any audience.</p>
+          <div class="card-tags">
+            <span class="card-tag hi">Storytelling</span>
+            <span class="card-tag">A/B Testing</span>
+            <span class="card-tag">KPI Design</span>
+          </div>
+          <div class="card-num">06</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div id="projects" style="border-top:1px solid var(--border);">
+  <div class="section-inner">
+    <p class="section-tag reveal">02 · Work</p>
+    <h2 class="section-heading reveal">SELECTED<br/>PROJECTS</h2>
+
+    <!-- ════════════════════════════════════════
+         ADD A NEW PROJECT: copy one .project-item
+         block, paste below the last one, update
+         the number, title, description, tags,
+         and set data-href to your GitHub/live URL.
+    ════════════════════════════════════════ -->
+
+    <div>
+      <div class="project-item reveal" data-href="https://github.com/clasonpeter/ed-analytics-portfolio">
+        <div class="proj-num">01</div>
+        <div class="proj-info">
+          <h3>ED Operations Analytics Dashboard</h3>
+          <p>End-to-end healthcare analytics project analyzing Emergency Department operational efficiency across 50,000 patient visits. Identified a 7.6% LWBS rate (nearly 4&times; the industry benchmark), a 19.7% boarding rate, and pinpointed ESI 3 patients as the primary driver of ED inefficiency.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">PostgreSQL</span>
+            <span class="proj-tag">SQL</span>
+            <span class="proj-tag">Tableau</span>
+          </div>
+        </div>
+        <div class="proj-arrow">&#8594;</div>
+      </div>
+
+      <div class="project-item reveal" data-href="https://github.com/clasonpeter/F1StrategyAnalysis">
+        <div class="proj-num">02</div>
+        <div class="proj-info">
+          <h3>F1 Strategy &amp; Tire Degradation Analysis</h3>
+          <p>Data-driven analysis of Formula 1 race strategy, tire performance, and tactical decisions. Includes a deep-dive into the 2025 Abu Dhabi GP, showing how Lando Norris used a defensive two-stop strategy to neutralize Ferrari's tire advantage and secure his first Driver's Championship.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">Python</span>
+            <span class="proj-tag">FastF1</span>
+            <span class="proj-tag">Pandas</span>
+            <span class="proj-tag">Matplotlib</span>
+          </div>
+        </div>
+        <div class="proj-arrow">&#8594;</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div id="personal" style="border-top:1px solid var(--border);">
+  <div class="section-inner">
+    <p class="section-tag reveal">03 · About</p>
+    <h2 class="section-heading reveal">ABOUT<br/>ME</h2>
+
+    <div class="vibe-grid-single reveal">
+        <div class="vibe-left">
+        <p>
+          I'm <strong>Clason Peter</strong>, a data analyst who believes the most important part of any analysis is what happens after the numbers. I'm driven by the challenge of making complex data feel inevitable to the people who need to act on it.
+        </p>
+        <p>
+          My background in <strong>marketing</strong> gives me a perspective that most analysts don't have. I learned early that there are always human needs behind the numbers: someone trying to make a decision, solve a problem, or justify a direction. That understanding shapes how I frame every analysis. I don't just ask what the data says; I ask what the audience needs to hear, and how to make the answer land.
+        </p>
+        <p>
+          <strong>Data storytelling</strong> is at the center of everything I do. I build the narrative around findings so that decisions aren't just informed, they're obvious. Numbers without context are just noise; I turn them into a point of view.
+        </p>
+        <p>
+          I'm expanding my toolkit into <strong>data science and engineering</strong>, building the systems and models that make insight scalable, not just presentable.
+        </p>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         CURRENTLY BLOCKS: update h3 and p text.
+    ════════════════════════════════════════ -->
+    <div class="currently-row reveal">
+      <div class="curr-block">
+        <div class="curr-label">Education</div>
+        <h3>M.S. Business Data Analytics</h3>
+        <p>West Virginia University, 2026<br/>B.S. Business Administration in Marketing, 2025</p>
+      </div>
+      <div class="curr-block">
+        <div class="curr-label">Experience</div>
+        <h3>Researcher, WV Opioid Settlement Fund</h3>
+        <p>Data Driven WV · West Virginia University<br/>January 2026 to Present</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact-section" style="text-align:center;border-top:1px solid var(--border);padding:6rem 3rem 8rem;">
+  <h2 class="contact-headline reveal">LET'S<br/><span class="contact-outline">CONNECT</span></h2>
+  <p class="reveal">Whether it's a project, an opportunity, or just talking data, reach out anytime.</p>
+  <div class="contact-links reveal">
+    <a href="/cdn-cgi/l/email-protection#7d1e111c0e12130d1809180f3d1a101c1411531e1210" class="contact-link">Email</a>
+    <a href="https://www.linkedin.com/in/clason-peter-b1b0a2253/" class="contact-link" target="_blank">LinkedIn</a>
+    <a href="https://github.com/clasonpeter" class="contact-link" target="_blank">GitHub</a>
+    <a href="997_ClasonPeter_Resume.pdf" class="contact-link" target="_blank">Resume</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>Clason Peter · 2026</p>
+  <p>Data · Science · Engineering</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* SPLASH */
+document.body.style.overflow='hidden';
+(function(){
+  var name="CLASON PETER";
+  var container=document.getElementById('splashName');
+  name.split('').forEach(function(ch,i){
+    var s=document.createElement('span');
+    s.textContent=ch==='\u0020'?'\u00A0':ch;
+    s.style.animationDelay=(0.07*i+0.1)+'s';
+    container.appendChild(s);
+  });
+})();
+function dismissSplash(){
+  var sp=document.getElementById('splash');
+  sp.classList.add('hidden');
+  document.body.style.overflow='';
+}
+document.getElementById('splash').addEventListener('click', dismissSplash);
+document.addEventListener('keydown', dismissSplash);
+
+/* CURSOR */
+var cursor=document.getElementById('cursor');
+var ring=document.getElementById('cursor-ring');
+var mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',function(e){
+  mx=e.clientX;my=e.clientY;
+  cursor.style.left=mx+'px';cursor.style.top=my+'px';
+});
+(function loop(){
+  rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(loop);
+})();
+
+/* SCROLL LINE */
+const sl=document.getElementById('scrollLine');
+window.addEventListener('scroll',()=>{
+  sl.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';
+});
+
+/* SCROLL REVEAL */
+const obs=new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* 3D TILT */
+document.querySelectorAll('[data-tilt]').forEach(card=>{
+  const wrap=card.closest('.card-3d-wrap');
+  wrap.addEventListener('mousemove',e=>{
+    const r=wrap.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-0.5;
+    const y=(e.clientY-r.top)/r.height-0.5;
+    card.style.transform=`rotateY(${x*14}deg) rotateX(${-y*14}deg) translateZ(8px)`;
+  });
+  wrap.addEventListener('mouseleave',()=>{
+    card.style.transform='rotateY(0) rotateX(0) translateZ(0)';
+  });
+});
+
+/* PARALLAX HERO TEXT */
+const bgText=document.querySelector('.hero-bg-text');
+window.addEventListener('scroll',()=>{
+  if(bgText)bgText.style.transform=`translateY(calc(-50% + ${window.scrollY*0.25}px))`;
+});
+
+/* PROJECT CLICK-THROUGH */
+document.querySelectorAll('.project-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const url=item.getAttribute('data-href');
+    if(url && url !== '#') window.open(url,'_blank');
+  });
+});
+</script>
+</body>
+</html>
