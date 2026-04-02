@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Work · Clason Peter</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
+</head>
+<body>
+
+<div class="scroll-line" id="scrollLine"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg viewBox="0 0 152 192" height="34" fill="none" stroke="#1A1A1A" stroke-width="8" stroke-linecap="square" stroke-linejoin="miter" xmlns="http://www.w3.org/2000/svg">
+      <path d="M62,10 L10,10 L10,182 L62,182"/>
+      <path d="M84,10 L84,182 M84,10 L142,10 L142,82 L84,82"/>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="work.html" class="active">Work</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div style="padding-top:6rem;">
+  <div class="section-inner">
+    <p class="section-tag reveal">Work</p>
+    <h2 class="section-heading reveal">SELECTED<br/>PROJECTS</h2>
+
+    <div>
+      <div class="project-item reveal" data-href="https://github.com/clasonpeter/ed-analytics-portfolio">
+        <div class="proj-num">01</div>
+        <div class="proj-info">
+          <h3>ED Operations Analytics Dashboard</h3>
+          <p>End-to-end healthcare analytics project analyzing Emergency Department operational efficiency across 50,000 patient visits. Identified a 7.6% LWBS rate (nearly 4&times; the industry benchmark), a 19.7% boarding rate, and pinpointed ESI 3 patients as the primary driver of ED inefficiency.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">PostgreSQL</span>
+            <span class="proj-tag">SQL</span>
+            <span class="proj-tag">Tableau</span>
+          </div>
+        </div>
+        <div class="proj-arrow">&#8594;</div>
+      </div>
+
+      <div class="project-item reveal" data-href="https://github.com/clasonpeter/F1StrategyAnalysis">
+        <div class="proj-num">02</div>
+        <div class="proj-info">
+          <h3>F1 Strategy &amp; Tire Degradation Analysis</h3>
+          <p>Data-driven analysis of Formula 1 race strategy, tire performance, and tactical decisions. Includes a deep-dive into the 2025 Abu Dhabi GP, showing how Lando Norris used a defensive two-stop strategy to neutralize Ferrari's tire advantage and secure his first Driver's Championship.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">Python</span>
+            <span class="proj-tag">FastF1</span>
+            <span class="proj-tag">Pandas</span>
+            <span class="proj-tag">Matplotlib</span>
+          </div>
+        </div>
+        <div class="proj-arrow">&#8594;</div>
+      </div>
+    </div>
+
+    <!-- CASE STUDY NARRATIVE -->
+    <div style="margin-top:4rem;border-top:1px solid var(--border);padding-top:3.5rem;">
+
+      <!-- The Problem -->
+      <div class="reveal" style="max-width:720px;margin-bottom:3rem;">
+        <p class="section-tag" style="margin-bottom:0.75rem;">The Problem</p>
+        <h3 style="font-family:'Playfair Display',serif;font-size:clamp(1.3rem,2.5vw,1.9rem);font-weight:700;color:var(--white);line-height:1.35;margin-bottom:1rem;">
+          One patient segment was quietly overwhelming an entire Emergency Department.
+        </h3>
+        <p style="font-size:0.7rem;line-height:2.1;color:var(--chrome-4);letter-spacing:0.04em;">
+          Across 50,000 patient visits, the ED appeared to be functioning — but the numbers told a different story. Patients were leaving without being seen at nearly four times the industry benchmark. Boarding rates were dangerously high. The question wasn't just "what is happening" — it was "why, and where is it coming from?"
+        </p>
+      </div>
+
+      <!-- Key Findings Callouts -->
+      <div class="story-callouts reveal">
+        <div class="story-callout">
+          <span class="callout-number">7.6%</span>
+          <span class="callout-label">LWBS Rate</span>
+          <p class="callout-desc">Nearly 4x the 2% industry benchmark. Patients leaving without being seen is both a safety risk and a revenue loss.</p>
+        </div>
+        <div class="story-callout">
+          <span class="callout-number">19.7%</span>
+          <span class="callout-label">Boarding Rate</span>
+          <p class="callout-desc">Over 1 in 5 patients were boarded, blocking bed turnover and creating a bottleneck that cascades across the entire department.</p>
+        </div>
+        <div class="story-callout">
+          <span class="callout-number">ESI 3</span>
+          <span class="callout-label">The Driver</span>
+          <p class="callout-desc">Mid-acuity patients flagged as ESI 3 were identified as the primary source of inefficiency — the segment where intervention would have the greatest impact.</p>
+        </div>
+      </div>
+
+      <!-- The Dashboard -->
+      <div class="tableau-embed-wrap reveal" style="margin-top:3rem;">
+        <p class="tableau-label">Explore the Data · ED Operations Analytics Dashboard</p>
+        <div class="tableau-container">
+          <tableau-viz
+            id="tableauViz"
+            src="https://public.tableau.com/views/EDOperationsDashboard/EDOperationsDashboard"
+            toolbar="bottom"
+            hide-tabs>
+          </tableau-viz>
+        </div>
+        <p class="tableau-sub">Interact with the live dashboard directly. <a href="https://public.tableau.com/app/profile/clason.peter/viz/EDOperationsDashboard/EDOperationsDashboard" target="_blank">Open in Tableau Public &#8599;</a></p>
+      </div>
+
+      <!-- So What -->
+      <div class="so-what-block reveal">
+        <div class="so-what-left">
+          <p class="section-tag" style="margin-bottom:0.75rem;">So What</p>
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:0.75rem;">The data points to a clear intervention.</h3>
+          <p style="font-size:0.68rem;line-height:2.05;color:var(--chrome-4);letter-spacing:0.04em;">
+            Targeted triage protocol improvements for ESI 3 patients — faster initial assessment, better fast-track routing, and proactive bed management — could meaningfully reduce both the LWBS rate and boarding backlog. This analysis doesn't just describe a problem. It identifies where to act and what to expect if you do.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>Clason Peter · 2026</p>
+  <p>Data · Science · Engineering</p>
+</footer>
+
+<script>
+const sl=document.getElementById('scrollLine');
+window.addEventListener('scroll',()=>{
+  sl.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';
+});
+const obs=new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+document.querySelectorAll('.project-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const url=item.getAttribute('data-href');
+    if(url && url !== '#') window.open(url,'_blank');
+  });
+});
+</script>
+</body>
+</html>
