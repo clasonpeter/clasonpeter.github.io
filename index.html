@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>CLASON PETER</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -246,6 +247,34 @@ nav{
   transition:color 0.2s,transform 0.2s;
 }
 .project-item:hover .proj-arrow{color:var(--chrome-2);transform:translateX(4px);}
+
+/* ── TABLEAU EMBED ── */
+.tableau-embed-wrap{
+  margin-top:3.5rem;
+  border:1px solid var(--border);
+  padding:2rem;
+  background:var(--card);
+}
+.tableau-label{
+  font-size:0.56rem;letter-spacing:0.24em;text-transform:uppercase;
+  color:var(--chrome-3);margin-bottom:1.25rem;
+}
+.tableau-container{
+  width:100%;overflow:hidden;
+}
+tableau-viz{
+  width:100%;
+  height:720px;
+  display:block;
+}
+.tableau-sub{
+  font-size:0.6rem;color:var(--chrome-4);margin-top:1rem;letter-spacing:0.04em;
+}
+.tableau-sub a{
+  color:var(--chrome-2);text-decoration:none;border-bottom:1px solid var(--border);
+  transition:color 0.2s;
+}
+.tableau-sub a:hover{color:var(--white);}
 
 /* ── ABOUT SINGLE COL ── */
 .vibe-grid-single{max-width:680px;}
@@ -574,6 +603,20 @@ footer p{font-size:0.55rem;letter-spacing:0.14em;text-transform:uppercase;color:
         </div>
         <div class="proj-arrow">&#8594;</div>
       </div>
+    </div>
+
+    <!-- TABLEAU EMBED -->
+    <div class="tableau-embed-wrap reveal">
+      <p class="tableau-label">Live Dashboard · ED Operations Analytics</p>
+      <div class="tableau-container">
+        <tableau-viz
+          id="tableauViz"
+          src="https://public.tableau.com/views/EDOperationsDashboard/EDOperationsDashboard"
+          toolbar="bottom"
+          hide-tabs>
+        </tableau-viz>
+      </div>
+      <p class="tableau-sub">Interact with the live dashboard directly. <a href="https://public.tableau.com/app/profile/clason.peter/viz/EDOperationsDashboard/EDOperationsDashboard" target="_blank">Open in Tableau Public &#8599;</a></p>
     </div>
   </div>
 </div>
